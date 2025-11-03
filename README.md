@@ -1,26 +1,26 @@
-# pytest Cannot Detect Circular Dependency even if Test Coverage Rate is 100%
+# pytest Cannot Detect Circular Dependencies Even with 100% Test Coverage
 
-This is one of the reason that if you manage a large Python project, you'd like other tools, like, Bazel and bazel test.
+This is one of the reasons why you might want to use additional tools like Bazel and bazel test when managing a large Python project.
 
 In this project, we have two files:
 
-https://github.com/wangkuiyi/circular_dep/blob/952cb713a59a39c156ec2b3decfdde4715ae948b/a.py#L1-L9
+<https://github.com/wangkuiyi/circular_dep/blob/952cb713a59a39c156ec2b3decfdde4715ae948b/a.py#L1-L9>
 
 and
 
-https://github.com/wangkuiyi/circular_dep/blob/952cb713a59a39c156ec2b3decfdde4715ae948b/b.py#L1-L9
+<https://github.com/wangkuiyi/circular_dep/blob/952cb713a59a39c156ec2b3decfdde4715ae948b/b.py#L1-L9>
 
-Each one of them provides a function and calls the function provided by the other -- this is a circular dependency.
+Each module provides a function and calls the function from the other module -- this is a circular dependency.
 
-The authors of this project pursue high test coverage and wrote tests for each of these modules and made sure that the coverage is 100%.
+The authors of this project pursue high test coverage and wrote tests for each module to ensure 100% coverage.
 
-https://github.com/wangkuiyi/circular_dep/blob/952cb713a59a39c156ec2b3decfdde4715ae948b/a_test.py#L1-L9
+<https://github.com/wangkuiyi/circular_dep/blob/952cb713a59a39c156ec2b3decfdde4715ae948b/a_test.py#L1-L9>
 
 and
 
-https://github.com/wangkuiyi/circular_dep/blob/952cb713a59a39c156ec2b3decfdde4715ae948b/b_test.py#L1-L9
+<https://github.com/wangkuiyi/circular_dep/blob/952cb713a59a39c156ec2b3decfdde4715ae948b/b_test.py#L1-L9>
 
-Both `pytest a_test.py` and `pytest b_test.py` would run successfully -- without error on the circular dependency
+Both `pytest a_test.py` and `pytest b_test.py` run successfully without detecting the circular dependency
 
 ```
 17:58 $ pytest a_test.py 
@@ -48,4 +48,4 @@ b_test.py ..                                                                    
 ============================================================================== 2 passed in 0.01s ==============================================================================
 ```
 
-It is out of the scope of this project to explain the terrible consequences of circular dependencis.
+It is beyond the scope of this project to explain the consequences of circular dependencies.
