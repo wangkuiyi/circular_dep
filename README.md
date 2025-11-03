@@ -48,4 +48,20 @@ b_test.py ..                                                                    
 ============================================================================== 2 passed in 0.01s ==============================================================================
 ```
 
-It is beyond the scope of this project to explain the consequences of circular dependencies.
+## Why Are Circular Dependencies Bad?
+
+1. **Makes code harder to understand** -- When module A depends on B and B depends on A, you can't fully understand either module in isolation. You must mentally load both modules simultaneously.
+
+2. **Prevents independent testing** -- You can't test module A without also bringing in module B, and vice versa. This defeats the purpose of unit testing.
+
+3. **Complicates refactoring and maintenance** -- Changing one module might break the other in unexpected ways. You can't extract or move one module without dealing with the other.
+
+4. **Makes the codebase fragile** -- Changes ripple between modules unpredictably. You think you're making a small local change, but suddenly tests break in completely unrelated parts of the codebase because of hidden circular dependencies.
+
+5. **Prevents clean module boundaries** -- Good architecture has clear dependency hierarchies (A→B→C). Circular dependencies mean there's no clear "lower level" vs "higher level".
+
+6. **Can cause initialization issues** -- Python tolerates some circular imports, but they can fail in subtle ways. Module initialization order becomes non-deterministic, attributes might not be available when you expect them, and the failures can be intermittent depending on which module gets imported first.
+
+7. **Hinders code reuse** -- You can't reuse module A in another project without also bringing module B. They're now a coupled pair, not independent components.
+
+The real danger is that pytest doesn't catch circular dependencies, so teams can accumulate them without realizing it, until the codebase becomes a tangled mess where everything depends on everything else. This is why tools like Bazel that enforce stricter dependency rules can be valuable for large projects.
